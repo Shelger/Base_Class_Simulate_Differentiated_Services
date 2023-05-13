@@ -15,10 +15,7 @@ public:
                     ns3::Ipv4Address destination_ip, ns3::Ipv4Mask destination_mask, uint32_t destination_port,
                     uint32_t protocol)
     {
-        // elements.push_back(new SourceIPAddress(source_ip));
         elements.push_back(new SourceMask(source_mask, source_ip));
-        // elements.push_back(new SourcePortNumber(source_port));
-        // elements.push_back(new DestinationIPAddress(destination_ip));
         elements.push_back(new DestinationMask(destination_mask, destination_ip));
         elements.push_back(new DestinationPortNumber(destination_port));
         elements.push_back(new ProtocolNumber(protocol));
@@ -26,9 +23,13 @@ public:
     
     std::vector<FilterElement*> elements;
 
-    bool match(ns3::Ptr<ns3::Packet> p) const {
-        for(FilterElement* element : elements) {
-            if(!element->match(p)) {
+    bool 
+    match(ns3::Ptr<ns3::Packet> p) const 
+    {
+        for(FilterElement* element : elements) 
+        {
+            if(!element->match(p)) 
+            {
                 return false;
             }
         }
@@ -36,8 +37,11 @@ public:
     };
 
 
-    void freeStuffs() {
-        for(FilterElement* fe : elements) {
+    void 
+    freeStuffs() 
+    {
+        for(FilterElement* fe : elements) 
+        {
             delete fe;
         }
     }

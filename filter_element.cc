@@ -4,13 +4,18 @@
 
 
 SourceIPAddress::SourceIPAddress(ns3::Ipv4Address value) : value_(value) {}
-bool SourceIPAddress::match(ns3::Ptr<ns3::Packet> p) const {
+bool 
+SourceIPAddress::match(ns3::Ptr<ns3::Packet> p) const 
+{
     ns3::Ptr<ns3::Packet> copy = p->Copy(); 
     ns3::Ipv4Header ipv4Header;
     copy->RemoveHeader(ipv4Header); 
-    if (ipv4Header.GetSource() == value_) {
+    if (ipv4Header.GetSource() == value_) 
+    {
         return true;
-    } else {
+    } 
+    else 
+    {
         return false;
     }
 }
@@ -19,13 +24,18 @@ bool SourceIPAddress::match(ns3::Ptr<ns3::Packet> p) const {
 
 SourceMask::SourceMask(ns3::Ipv4Mask value, ns3::Ipv4Address address) : value_(value), address_(address) {}
 
-bool SourceMask::match(ns3::Ptr<ns3::Packet> p) const {
+bool 
+SourceMask::match(ns3::Ptr<ns3::Packet> p) const 
+{
     ns3::Ptr<ns3::Packet> copy = p->Copy(); 
     ns3::Ipv4Header ipv4Header;
     copy->RemoveHeader(ipv4Header); 
-    if (value_.IsMatch(address_, ipv4Header.GetSource())) {
+    if (value_.IsMatch(address_, ipv4Header.GetSource())) 
+    {
         return true;
-    } else {
+    } 
+    else 
+    {
         return false;
     }
 }
@@ -33,7 +43,9 @@ bool SourceMask::match(ns3::Ptr<ns3::Packet> p) const {
 
 SourcePortNumber::SourcePortNumber(uint32_t value) : value_(value) {}
 
-bool SourcePortNumber::match(ns3::Ptr<ns3::Packet> p) const {
+bool 
+SourcePortNumber::match(ns3::Ptr<ns3::Packet> p) const 
+{
     ns3::Ptr<ns3::Packet> copy = p->Copy(); 
     ns3::Ipv4Header ipv4Header;
     copy->RemoveHeader(ipv4Header); 
@@ -41,7 +53,9 @@ bool SourcePortNumber::match(ns3::Ptr<ns3::Packet> p) const {
     copy->RemoveHeader(udpHeader);
     if (udpHeader.GetSourcePort() == value_) {
         return true;
-    } else {
+    } 
+    else 
+    {
         return false;
     }
 }
@@ -49,13 +63,18 @@ bool SourcePortNumber::match(ns3::Ptr<ns3::Packet> p) const {
 
 DestinationIPAddress::DestinationIPAddress(ns3::Ipv4Address value) : value_(value) {}
 
-bool DestinationIPAddress::match(ns3::Ptr<ns3::Packet> p) const {
+bool 
+DestinationIPAddress::match(ns3::Ptr<ns3::Packet> p) const 
+{
     ns3::Ptr<ns3::Packet> copy = p->Copy(); 
     ns3::Ipv4Header ipv4Header;
     copy->RemoveHeader(ipv4Header); 
-    if (ipv4Header.GetDestination() == value_) {
+    if (ipv4Header.GetDestination() == value_) 
+    {
         return true;
-    } else {
+    } 
+    else 
+    {
         return false;
     }
 }
@@ -63,13 +82,18 @@ bool DestinationIPAddress::match(ns3::Ptr<ns3::Packet> p) const {
 
 DestinationMask::DestinationMask(ns3::Ipv4Mask value, ns3::Ipv4Address address) : value_(value), address_(address) {}
 
-bool DestinationMask::match(ns3::Ptr<ns3::Packet> p) const {
+bool 
+DestinationMask::match(ns3::Ptr<ns3::Packet> p) const 
+{
     ns3::Ptr<ns3::Packet> copy = p->Copy(); 
     ns3::Ipv4Header ipv4Header;
     copy->RemoveHeader(ipv4Header); 
-    if (value_.IsMatch(address_, ipv4Header.GetDestination())) {
+    if (value_.IsMatch(address_, ipv4Header.GetDestination())) 
+    {
         return true;
-    } else {
+    } 
+    else 
+    {
         return false;
     }
 }
@@ -77,15 +101,20 @@ bool DestinationMask::match(ns3::Ptr<ns3::Packet> p) const {
 
 DestinationPortNumber::DestinationPortNumber(uint32_t value) : value_(value) {}
 
-bool DestinationPortNumber::match(ns3::Ptr<ns3::Packet> p) const {
+bool 
+DestinationPortNumber::match(ns3::Ptr<ns3::Packet> p) const 
+{
     ns3::Ptr<ns3::Packet> copy = p->Copy(); 
     ns3::Ipv4Header ipv4Header;
     copy->RemoveHeader(ipv4Header); 
     ns3::UdpHeader udpHeader;
     copy->RemoveHeader(udpHeader);
-    if (udpHeader.GetDestinationPort() == value_) {
+    if (udpHeader.GetDestinationPort() == value_) 
+    {
         return true;
-    } else {
+    } 
+    else 
+    {
         return false;
     }
 }
@@ -93,13 +122,18 @@ bool DestinationPortNumber::match(ns3::Ptr<ns3::Packet> p) const {
 
 
 ProtocolNumber::ProtocolNumber(uint32_t value) : value_(value) {}
-bool ProtocolNumber::match(ns3::Ptr<ns3::Packet> p) const {
+bool 
+ProtocolNumber::match(ns3::Ptr<ns3::Packet> p) const 
+{
     ns3::Ptr<ns3::Packet> copy = p->Copy(); 
     ns3::Ipv4Header ipv4Header;
     copy->RemoveHeader(ipv4Header); 
-    if (ipv4Header.GetProtocol() == value_) {
+    if (ipv4Header.GetProtocol() == value_) 
+    {
         return true;
-    } else {
+    } 
+    else 
+    {
         return false;
     }
 }

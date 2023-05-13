@@ -87,12 +87,15 @@ int main(int argc, char* argv[]) {
       PacketSinkHelper sinkA ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), 8080));
       ApplicationContainer serverAppsA = sinkA.Install (nodes.Get (2));
       serverAppsA.Start (Seconds (1.0));
-      serverAppsA.Stop (Seconds (20.0));
+      serverAppsA.Stop (Seconds (30.0));
 
       PacketSinkHelper sinkB ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), 8081));
       ApplicationContainer serverAppsB = sinkB.Install (nodes.Get (2));
       serverAppsB.Start (Seconds (1.0));
-      serverAppsB.Stop (Seconds (20.0));
+      serverAppsB.Stop (Seconds (30.0));
+
+      pointToPoint1.EnablePcapAll("spq-udp");
+      pointToPoint2.EnablePcapAll("spq-udp");
         
 // here how to use trafficcontrolhelper to connect
   } 
@@ -114,56 +117,54 @@ int main(int argc, char* argv[]) {
       p2pDevice2->SetQueue(diffServ);
 
       UdpClientHelper client1 (interfaces2.GetAddress (1), 8080);
-      client1.SetAttribute ("MaxPackets", UintegerValue (100000));
-      client1.SetAttribute ("Interval", TimeValue (Seconds (0.5)));
+      client1.SetAttribute ("MaxPackets", UintegerValue (10000));
+      client1.SetAttribute ("Interval", TimeValue (Seconds (0.001)));
       client1.SetAttribute ("PacketSize", UintegerValue (1024));
       ApplicationContainer clientApps1 = client1.Install (nodes.Get (0));
-      clientApps1.Start (Seconds (1.0)); 
-      clientApps1.Stop (Seconds (3.0)); 
+      clientApps1.Start (Seconds (2.0)); 
+      clientApps1.Stop (Seconds (4.0)); 
 
       UdpClientHelper client2 (interfaces2.GetAddress (1), 8081);
-      client2.SetAttribute ("MaxPackets", UintegerValue (100000));
-      client2.SetAttribute ("Interval", TimeValue (Seconds (0.5)));
+      client2.SetAttribute ("MaxPackets", UintegerValue (10000));
+      client2.SetAttribute ("Interval", TimeValue (Seconds (0.001)));
       client2.SetAttribute ("PacketSize", UintegerValue (1024));
       ApplicationContainer clientApps2 = client2.Install (nodes.Get (0));
-      clientApps2.Start (Seconds (1.0)); 
-      clientApps2.Stop (Seconds (3.0)); 
+      clientApps2.Start (Seconds (2.0)); 
+      clientApps2.Stop (Seconds (4.0)); 
 
       UdpClientHelper client3 (interfaces2.GetAddress (1), 8082);
-      client3.SetAttribute ("MaxPackets", UintegerValue (100000));
-      client3.SetAttribute ("Interval", TimeValue (Seconds (0.5)));
+      client3.SetAttribute ("MaxPackets", UintegerValue (10000));
+      client3.SetAttribute ("Interval", TimeValue (Seconds (0.001)));
       client3.SetAttribute ("PacketSize", UintegerValue (1024));
       ApplicationContainer clientApps3 = client3.Install (nodes.Get (0));
-      clientApps3.Start (Seconds (1.0)); 
-      clientApps3.Stop (Seconds (3.0)); 
+      clientApps3.Start (Seconds (2.0)); 
+      clientApps3.Stop (Seconds (4.0)); 
 
       PacketSinkHelper sinkA ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), 8080));
       ApplicationContainer serverAppsA = sinkA.Install (nodes.Get (2));
       serverAppsA.Start (Seconds (1.0));
-      serverAppsA.Stop (Seconds (20.0));
+      serverAppsA.Stop (Seconds (30.0));
 
       PacketSinkHelper sinkB ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), 8081));
       ApplicationContainer serverAppsB = sinkB.Install (nodes.Get (2));
       serverAppsB.Start (Seconds (1.0));
-      serverAppsB.Stop (Seconds (20.0));
+      serverAppsB.Stop (Seconds (30.0));
 
       PacketSinkHelper sinkC ("ns3::UdpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), 8082));
       ApplicationContainer serverAppsC = sinkC.Install (nodes.Get (2));
       serverAppsC.Start (Seconds (1.0));
-      serverAppsC.Stop (Seconds (20.0));
-  } else {
+      serverAppsC.Stop (Seconds (30.0));
+
+      pointToPoint1.EnablePcapAll("drr-udp");
+      pointToPoint2.EnablePcapAll("drr-udp");
+  } 
+  else 
+  {
     std::cerr << "Invalid QoS mechanism specified. Use 'SPQ' or 'DRR'." << std::endl;
     return 1;
   }
 
-  // pointToPoint1.SetQueue("ns3::DropTailQueue", "MaxSize", StringValue("1000p"));
-  // pointToPoint2.SetQueue("ns3::DropTailQueue", "MaxSize", StringValue("1000p"));
-  // LogComponentEnable("UdpSocketImpl", LOG_LEVEL_INFO);
-
-    Ipv4GlobalRoutingHelper::PopulateRoutingTables();
-
-  pointToPoint1.EnablePcapAll("udp");
-  pointToPoint2.EnablePcapAll("udp");
+  Ipv4GlobalRoutingHelper::PopulateRoutingTables();
 
   Simulator::Run ();
   Simulator::Destroy ();
